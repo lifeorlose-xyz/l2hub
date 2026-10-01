@@ -7,13 +7,19 @@ local GAMES = {
         Name      = "The Morgue Shift",
         Subtitle  = "Freemium Roblox Scripts",
         PlaceId   = 126025038789852,
-        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/loader/scripts/themorgueshift.lua",
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/themorgueshift.lua",
     },
     {
-        Name      = "Superhero Evolution",
+        Name      = "+1 Superhero Evolution",
         Subtitle  = "Freemium Roblox Scripts",
         PlaceId   = 97824450589417,
-        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/loader/scripts/superheroevolution.lua",
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/superheroevolution.lua",
+    },
+    {
+        Name    = "+1 Loot To Forge",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 118805555015549,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge.lua",
     },
 }
 
