@@ -18,7 +18,7 @@ local GAMES = {
 }
 
 local CONFIG = {
-    LoaderURL   = "https://raw.githubusercontent.com/euloxa/Library/main/loader/loader.lua",
+    LoaderURL   = "https://raw.githubusercontent.com/lifeorlose-xyz/l2hub/refs/heads/main/loader.lua",
     VerifyKey   = "L2-HUB",
     NotifyTime  = 4,
     Verbose     = true,
