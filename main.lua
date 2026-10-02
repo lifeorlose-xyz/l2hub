@@ -27,6 +27,12 @@ local GAMES = {
         PlaceId   = 113290951185459,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/animedice.lua",
     },
+    {
+        Name    = "Ride A Pet",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 124216119978534,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/rideapet.lua",
+    },
 }
 
 local CONFIG = {
