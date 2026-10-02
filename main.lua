@@ -21,6 +21,12 @@ local GAMES = {
         PlaceId   = 118805555015549,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge.lua",
     },
+    {
+        Name    = "Anime Dice",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 113290951185459,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/animedice.lua",
+    },
 }
 
 local CONFIG = {
