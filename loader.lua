@@ -35,6 +35,7 @@ local ICONS = {
     Verify  = "10709791760",
     Play    = "10709791760",
     Game    = "113512058469465",
+    Lock    = "10709678129",
 }
 
 local function GetCoreGui()
@@ -585,37 +586,42 @@ local function CreateGameCard(entry, index, isCurrent)
     playIcon.ScaleType = Enum.ScaleType.Fit
     playIcon.Parent = card
 
-    if isCurrent then
-        local badge = Instance.new("TextLabel")
-        badge.AnchorPoint = Vector2.new(1, 0)
-        badge.Position = UDim2.new(1, -14, 0, 8)
-        badge.Size = UDim2.fromOffset(120, 14)
-        badge.BackgroundTransparency = 1
-        badge.Font = Enum.Font.GothamBold
-        badge.Text = "CURRENT GAME"
-        badge.TextColor3 = CONFIG.Accent
-        badge.TextSize = 10
-        badge.TextXAlignment = Enum.TextXAlignment.Right
-        badge.Parent = card
+if isCurrent then
+    local badge = Instance.new("TextLabel")
+    badge.AnchorPoint = Vector2.new(1, 0)
+    badge.Position = UDim2.new(1, -14, 0, 8)
+    badge.Size = UDim2.fromOffset(120, 14)
+    badge.BackgroundTransparency = 1
+    badge.Font = Enum.Font.GothamBold
+    badge.Text = "CURRENT GAME"
+    badge.TextColor3 = CONFIG.Accent
+    badge.TextSize = 10
+    badge.TextXAlignment = Enum.TextXAlignment.Right
+    badge.Parent = card
 
-        playIcon.Position = UDim2.new(1, -14, 0.5, 7)
+    playIcon.Position = UDim2.new(1, -14, 0.5, 7)
+else
+    card.BackgroundTransparency = 0.55
+    icon.ImageTransparency = 0.5
+    iconHolder.BackgroundTransparency = 0.4
+    nameLabel.TextColor3 = CONFIG.Placeholder
+    subLabel.TextColor3 = Color3.fromRGB(90, 90, 100)
+    playIcon.Image = "rbxassetid://" .. ICONS.Lock
+    playIcon.ImageColor3 = CONFIG.Placeholder
+    playIcon.ImageTransparency = 0.4
+    st.Transparency = 0.75
+end
+
+if isCurrent then
+        card.MouseEnter:Connect(function()
+            Tween(card, { BackgroundTransparency = 0.35 }, 0.15)
+            Tween(st, { Transparency = 0.1, Color = CONFIG.Accent }, 0.15)
+        end)
+        card.MouseLeave:Connect(function()
+            Tween(card, { BackgroundTransparency = 0.15 }, 0.15)
+            Tween(st, { Transparency = 0.15, Color = CONFIG.Accent }, 0.15)
+        end)
     end
-
-    card.MouseEnter:Connect(function()
-        Tween(card, { BackgroundTransparency = 0.35 }, 0.15)
-        Tween(st, { Transparency = 0.1, Color = CONFIG.Accent }, 0.15)
-    end)
-    card.MouseLeave:Connect(function()
-        Tween(card, { BackgroundTransparency = 0.15 }, 0.15)
-        Tween(
-            st,
-            {
-                Transparency = isCurrent and 0.15 or 0.35,
-                Color = isCurrent and CONFIG.Accent or CONFIG.Outline
-            },
-            0.15
-        )
-    end)
 
     return card
 end
@@ -661,16 +667,19 @@ local function BuildGameList()
         return
     end
 
-    local ordered, current = GetOrderedGames()
+        local ordered, current = GetOrderedGames()
     for i, entry in ipairs(ordered) do
         local isCurrent = (entry == current)
         local card = CreateGameCard(entry, i, isCurrent)
-        card.MouseButton1Click:Connect(function()
-            FireVerified(entry)
-            Tween(Root, { BackgroundTransparency = 1 }, 0.25)
-            task.wait(0.3)
-            ScreenGui:Destroy()
-        end)
+
+        if isCurrent then
+            card.MouseButton1Click:Connect(function()
+                FireVerified(entry)
+                Tween(Root, { BackgroundTransparency = 1 }, 0.25)
+                task.wait(0.3)
+                ScreenGui:Destroy()
+            end)
+        end
     end
 end
 
