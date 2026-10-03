@@ -2,6 +2,7 @@ local Players           = game:GetService("Players")
 local TweenService      = game:GetService("TweenService")
 local UserInputService  = game:GetService("UserInputService")
 local Camera            = workspace.CurrentCamera
+local MarketplaceService = game:GetService("MarketplaceService")
 
 local CONFIG = {
     Key            = "L2-HUB",
@@ -506,10 +507,10 @@ GameLayout.Padding = UDim.new(0, 8)
 GameLayout.SortOrder = Enum.SortOrder.LayoutOrder
 GameLayout.Parent = GameScroll
 
-local function CreateGameCard(entry, index)
+local function CreateGameCard(entry, index, isCurrent)
     local card = Instance.new("TextButton")
     card.Size = UDim2.new(1, -6, 0, 62)
-    card.BackgroundColor3 = CONFIG.Surface
+    card.BackgroundColor3 = isCurrent and CONFIG.SurfaceLight or CONFIG.Surface
     card.BackgroundTransparency = 0.15
     card.BorderSizePixel = 0
     card.Text = ""
@@ -517,7 +518,12 @@ local function CreateGameCard(entry, index)
     card.LayoutOrder = index
     card.Parent = GameScroll
     Corner(card, 10)
-    local st = Stroke(card, CONFIG.Outline, 1, 0.35)
+    local st = Stroke(
+        card,
+        isCurrent and CONFIG.Accent or CONFIG.Outline,
+        1,
+        isCurrent and 0.15 or 0.35
+    )
 
     local iconHolder = Instance.new("Frame")
     iconHolder.Size = UDim2.fromOffset(50, 50)
@@ -536,6 +542,13 @@ local function CreateGameCard(entry, index)
     icon.ScaleType = Enum.ScaleType.Crop
     icon.Parent = iconHolder
     Corner(icon, 7)
+
+    task.spawn(function()
+        local ok, info = pcall(MarketplaceService.GetProductInfo, MarketplaceService, entry.PlaceId)
+        if ok and type(info) == "table" and info.IconImageAssetId and info.IconImageAssetId > 0 then
+            icon.Image = "rbxassetid://" .. tostring(info.IconImageAssetId)
+        end
+    end)
 
     local nameLabel = Instance.new("TextLabel")
     nameLabel.Position = UDim2.fromOffset(66, 12)
@@ -572,16 +585,60 @@ local function CreateGameCard(entry, index)
     playIcon.ScaleType = Enum.ScaleType.Fit
     playIcon.Parent = card
 
+    if isCurrent then
+        local badge = Instance.new("TextLabel")
+        badge.AnchorPoint = Vector2.new(1, 0)
+        badge.Position = UDim2.new(1, -14, 0, 8)
+        badge.Size = UDim2.fromOffset(120, 14)
+        badge.BackgroundTransparency = 1
+        badge.Font = Enum.Font.GothamBold
+        badge.Text = "CURRENT GAME"
+        badge.TextColor3 = CONFIG.Accent
+        badge.TextSize = 10
+        badge.TextXAlignment = Enum.TextXAlignment.Right
+        badge.Parent = card
+
+        playIcon.Position = UDim2.new(1, -14, 0.5, 7)
+    end
+
     card.MouseEnter:Connect(function()
         Tween(card, { BackgroundTransparency = 0.35 }, 0.15)
         Tween(st, { Transparency = 0.1, Color = CONFIG.Accent }, 0.15)
     end)
     card.MouseLeave:Connect(function()
         Tween(card, { BackgroundTransparency = 0.15 }, 0.15)
-        Tween(st, { Transparency = 0.35, Color = CONFIG.Outline }, 0.15)
+        Tween(
+            st,
+            {
+                Transparency = isCurrent and 0.15 or 0.35,
+                Color = isCurrent and CONFIG.Accent or CONFIG.Outline
+            },
+            0.15
+        )
     end)
 
-    return card, entry
+    return card
+end
+
+local function GetOrderedGames()
+    local current = nil
+    for _, e in ipairs(GAMES) do
+        if tonumber(e.PlaceId) == tonumber(game.PlaceId) then
+            current = e
+            break
+        end
+    end
+
+    local ordered = {}
+    if current then
+        table.insert(ordered, current)
+    end
+    for _, e in ipairs(GAMES) do
+        if e ~= current then
+            table.insert(ordered, e)
+        end
+    end
+    return ordered, current
 end
 
 local function BuildGameList()
@@ -604,13 +661,15 @@ local function BuildGameList()
         return
     end
 
-    for i, entry in ipairs(GAMES) do
-    local card = CreateGameCard(entry, i)
-    card.MouseButton1Click:Connect(function()
-        FireVerified(entry)
-        Tween(Root, { BackgroundTransparency = 1 }, 0.25)
-        task.wait(0.3)
-        ScreenGui:Destroy()
+    local ordered, current = GetOrderedGames()
+    for i, entry in ipairs(ordered) do
+        local isCurrent = (entry == current)
+        local card = CreateGameCard(entry, i, isCurrent)
+        card.MouseButton1Click:Connect(function()
+            FireVerified(entry)
+            Tween(Root, { BackgroundTransparency = 1 }, 0.25)
+            task.wait(0.3)
+            ScreenGui:Destroy()
         end)
     end
 end
