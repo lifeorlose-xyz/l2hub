@@ -122,14 +122,27 @@ local function FireVerified(result)
 end
 
 local GAMES = getgenv().L2HUB_GAMES or {}
+
 local function IsCurrentPlace(entry)
-    if type(entry.PlaceIds) == "table" and #entry.PlaceIds > 0 then
+    local myPlace = tonumber(game.PlaceId)
+    local myGame  = tonumber(game.GameId)
+
+    if tonumber(entry.PlaceId) == myPlace then return true end
+    if tonumber(entry.GameId)  == myGame  then return true end
+
+    if type(entry.PlaceIds) == "table" then
         for _, pid in ipairs(entry.PlaceIds) do
-            if tonumber(pid) == tonumber(game.PlaceId) then return true end
+            if tonumber(pid) == myPlace then return true end
         end
-        return false
     end
-    return tonumber(entry.PlaceId) == tonumber(game.PlaceId)
+
+    if type(entry.GameIds) == "table" then
+        for _, gid in ipairs(entry.GameIds) do
+            if tonumber(gid) == myGame then return true end
+        end
+    end
+
+    return false
 end
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -642,6 +655,11 @@ local function GetOrderedGames()
             current = e
             break
         end
+    end
+
+    if not current then
+        warn(("[L2-HUB] No match for current game — PlaceId=%s, GameId=%s")
+            :format(tostring(game.PlaceId), tostring(game.GameId)))
     end
 
     local ordered = {}

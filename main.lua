@@ -34,11 +34,11 @@ local GAMES = {
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/rideapet.lua",
     },
     {
-        Name      = "Dueling Grounds",
+        Name    = "Dueling Grounds",
         Subtitle  = "Freemium Roblox Scripts",
-        PlaceIds  = { 94217045453265, 9051406594,                                94217045453265 },
+        PlaceIds  = { 94217045453265, 9051406594 },
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/duelinggrounds.lua",
-},
+    },
 }
 
 local CONFIG = {
@@ -192,13 +192,17 @@ local function ExecuteScript(gameEntry)
 end
 
 local function NormalizeGames()
-    for _, gameEntry in ipairs(GAMES) do
-        if gameEntry.PlaceIds and type(gameEntry.PlaceIds) == "table" and #gameEntry.PlaceIds > 0 then
-            if not gameEntry.PlaceId then
-                gameEntry.PlaceId = gameEntry.PlaceIds[1]
-            end
-        elseif gameEntry.PlaceId then
-            gameEntry.PlaceIds = { gameEntry.PlaceId }
+    for _, g in ipairs(GAMES) do
+        if g.PlaceIds and type(g.PlaceIds) == "table" and #g.PlaceIds > 0 then
+            if not g.PlaceId then g.PlaceId = g.PlaceIds[1] end
+        elseif g.PlaceId then
+            g.PlaceIds = { g.PlaceId }
+        end
+
+        if g.GameIds and type(g.GameIds) == "table" and #g.GameIds > 0 then
+            if not g.GameId then g.GameId = g.GameIds[1] end
+        elseif g.GameId then
+            g.GameIds = { g.GameId }
         end
     end
 end
