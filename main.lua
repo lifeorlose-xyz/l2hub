@@ -33,6 +33,12 @@ local GAMES = {
         PlaceId   = 124216119978534,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/rideapet.lua",
     },
+    {
+        Name      = "Dueling Grounds",
+        Subtitle  = "Freemium Roblox Scripts",
+        PlaceIds  = { 94217045453265, 9051406594,                                94217045453265 },
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/duelinggrounds.lua",
+},
 }
 
 local CONFIG = {
@@ -185,6 +191,18 @@ local function ExecuteScript(gameEntry)
     return true
 end
 
+local function NormalizeGames()
+    for _, gameEntry in ipairs(GAMES) do
+        if gameEntry.PlaceIds and type(gameEntry.PlaceIds) == "table" and #gameEntry.PlaceIds > 0 then
+            if not gameEntry.PlaceId then
+                gameEntry.PlaceId = gameEntry.PlaceIds[1]
+            end
+        elseif gameEntry.PlaceId then
+            gameEntry.PlaceIds = { gameEntry.PlaceId }
+        end
+    end
+end
+
 local function Main()
     Log("Starting L2-HUB...")
 
@@ -193,6 +211,7 @@ local function Main()
         return
     end
 
+    NormalizeGames()
     getgenv().L2HUB_GAMES = GAMES
 
     if not LoadLoader() then
