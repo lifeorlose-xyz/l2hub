@@ -36,8 +36,14 @@ local GAMES = {
     {
         Name    = "Dueling Grounds",
         Subtitle  = "Freemium Roblox Scripts",
-        PlaceIds  = { 94217045453265, 9051406594 },
+        PlaceIds  = { 94217045453265, 9051406594, 100484168444874 },
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/duelinggrounds.lua",
+    },
+    {
+        Name    = "Break And Steal An Egg",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 114326934417838,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/basae.lua",
     },
 }
 
