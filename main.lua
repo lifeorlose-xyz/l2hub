@@ -51,6 +51,12 @@ local GAMES = {
         PlaceId   = 99925503388128,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/fishingmaster.lua",
     },
+    {
+        Name    = "Loot To Forge V2",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 118805555015549,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge-v3.lua",
+    },
 }
 
 local CONFIG = {
