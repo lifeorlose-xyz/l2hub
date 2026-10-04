@@ -45,6 +45,12 @@ local GAMES = {
         PlaceId   = 114326934417838,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/basae.lua",
     },
+    {
+        Name    = "Fishing Master",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 99925503388128,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/fishingmaster.lua",
+    },
 }
 
 local CONFIG = {
