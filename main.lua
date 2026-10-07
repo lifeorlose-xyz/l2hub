@@ -16,12 +16,6 @@ local GAMES = {
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/superheroevolution.lua",
     },
     {
-        Name    = "+1 Loot To Forge",
-        Subtitle   = "Freemium Roblox Scripts",
-        PlaceId   = 118805555015549,
-        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge.lua",
-    },
-    {
         Name    = "Anime Dice",
         Subtitle   = "Freemium Roblox Scripts",
         PlaceId   = 113290951185459,
@@ -52,7 +46,7 @@ local GAMES = {
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/fishingmaster.lua",
     },
     {
-        Name    = "Loot To Forge V2",
+        Name    = "+1 Loot To Forge",
         Subtitle   = "Freemium Roblox Scripts",
         PlaceId   = 118805555015549,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge-v3.lua",
