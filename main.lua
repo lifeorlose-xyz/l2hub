@@ -69,6 +69,12 @@ local GAMES = {
         PlaceId   = 120731410233153,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/coldwar.lua",
     },
+    {
+        Name    = "Sniper Arena",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 122446657157717,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/sniperarena.lua",
+    },
 }
 
 local CONFIG = {
