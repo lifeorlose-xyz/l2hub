@@ -58,10 +58,16 @@ local GAMES = {
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge-v3.lua",
     },
     {
-        Name    = "+1 Assasin Levelinh",
+        Name    = "+1 Assasin Leveling",
         Subtitle   = "Freemium Roblox Scripts",
         PlaceId   = 120731410233153,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/assasinleveling.lua",
+    },
+    {
+        Name    = "Cold War [VIETNAM]",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 120731410233153,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/coldwar.lua",
     },
 }
 
