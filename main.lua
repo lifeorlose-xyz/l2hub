@@ -57,6 +57,12 @@ local GAMES = {
         PlaceId   = 118805555015549,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge-v3.lua",
     },
+    {
+        Name    = "+1 Assasin Levelinh",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 120731410233153,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/assasinleveling.lua",
+    },
 }
 
 local CONFIG = {
