@@ -69,6 +69,12 @@ local GAMES = {
         PlaceId   = 122446657157717,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/sniperarena.lua",
     },
+    {
+        Name    = "Don't Steal My Egg",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 135675416428111,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/dontstealmyegg.lua",
+    },
 }
 
 local CONFIG = {
