@@ -114,6 +114,28 @@ local function CopyURL(url)
     return copied, url
 end
 
+local function SaveKey(key)
+    if not writefile then return end
+    pcall(writefile, CONFIG.SaveFile, tostring(key))
+end
+
+local function LoadKey()
+    if not (isfile and readfile) then return nil end
+    if not isfile(CONFIG.SaveFile) then return nil end
+    local ok, data = pcall(readfile, CONFIG.SaveFile)
+    if ok and type(data) == "string" and #data > 0 then
+        return data
+    end
+    return nil
+end
+
+local function ClearKey()
+    if not (isfile and delfile) then return end
+    if isfile(CONFIG.SaveFile) then
+        pcall(delfile, CONFIG.SaveFile)
+    end
+end
+
 local function FireVerified(result)
     local bindable = getgenv().L2HUB_VERIFIED
     if bindable and typeof(bindable) == "Instance" and bindable:IsA("BindableEvent") then
@@ -773,12 +795,15 @@ local function NormalizeKey(s)
 end
 
 local verifying = false
-VerifyBtn.MouseButton1Click:Connect(function()
+
+local function PerformVerify(rawKey, isAuto)
     if verifying then return end
 
-    local typed = NormalizeKey(KeyInput.Text)
+    local typed = NormalizeKey(rawKey)
     if typed == "" then
-        Toast("Please enter your key first.", false)
+        if not isAuto then
+            Toast("Please enter your key first.", false)
+        end
         return
     end
 
@@ -786,9 +811,10 @@ VerifyBtn.MouseButton1Click:Connect(function()
     VerifyLabel.Text = "Verifying..."
 
     task.spawn(function()
-        task.wait(0.9)
+        task.wait(isAuto and 0.3 or 0.9)
         if typed == NormalizeKey(CONFIG.Key) then
-            Toast("Access granted.", true)
+            SaveKey(typed)
+            Toast(isAuto and "Key restored. Access granted." or "Access granted.", true)
             VerifyLabel.Text = "Verified"
             task.wait(0.5)
             ShowGamePage()
@@ -796,8 +822,13 @@ VerifyBtn.MouseButton1Click:Connect(function()
             Toast("Invalid key. Please try again.", false)
             VerifyLabel.Text = "Verify Key"
             verifying = false
+            if isAuto then ClearKey() end
         end
     end)
+end
+
+VerifyBtn.MouseButton1Click:Connect(function()
+    PerformVerify(KeyInput.Text, false)
 end)
 
 IconGetKey.MouseButton1Click:Connect(function()
@@ -858,4 +889,12 @@ Tween(Root, { BackgroundTransparency = 0.05 }, 0.35, Enum.EasingStyle.Back, Enum
 
 task.delay(0.5, function()
     pcall(function() KeyInput:CaptureFocus() end)
+end)
+
+task.spawn(function()
+    local saved = LoadKey()
+    if saved and saved ~= "" then
+        KeyInput.Text = saved
+        PerformVerify(saved, true)
+    end
 end)
