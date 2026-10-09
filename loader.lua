@@ -11,6 +11,8 @@ local CONFIG = {
     WebsiteURL     = "https://lifeorlose.xyz",
     BannerURL      = "https://files.catbox.moe/6ajzfh.png",
     LogoAsset      = "rbxassetid://105349270202991",
+    SaveFile       = "L2Hub_LoaderAssets/key.txt",
+    SaveFolder     = "L2Hub_LoaderAssets",
     WindowTitle    = "L2 HUB",
     WindowSubtitle = "Freemium Roblox Scripts",
     BaseSize       = Vector2.new(400, 315),
@@ -115,13 +117,22 @@ local function CopyURL(url)
 end
 
 local function SaveKey(key)
-    if not writefile then return end
-    pcall(writefile, CONFIG.SaveFile, tostring(key))
+    if not writefile then return false end
+    if not CONFIG.SaveFile or CONFIG.SaveFile == "" then return false end
+    if isfolder and makefolder and CONFIG.SaveFolder then
+        if not isfolder(CONFIG.SaveFolder) then
+            pcall(makefolder, CONFIG.SaveFolder)
+        end
+    end
+    local ok = pcall(writefile, CONFIG.SaveFile, tostring(key))
+    return ok
 end
 
 local function LoadKey()
     if not (isfile and readfile) then return nil end
-    if not isfile(CONFIG.SaveFile) then return nil end
+    if not CONFIG.SaveFile or CONFIG.SaveFile == "" then return nil end
+    local exists = pcall(isfile, CONFIG.SaveFile)
+    if not exists or not isfile(CONFIG.SaveFile) then return nil end
     local ok, data = pcall(readfile, CONFIG.SaveFile)
     if ok and type(data) == "string" and #data > 0 then
         return data
@@ -131,6 +142,7 @@ end
 
 local function ClearKey()
     if not (isfile and delfile) then return end
+    if not CONFIG.SaveFile or CONFIG.SaveFile == "" then return end
     if isfile(CONFIG.SaveFile) then
         pcall(delfile, CONFIG.SaveFile)
     end
