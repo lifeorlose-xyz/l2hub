@@ -72,7 +72,7 @@ local GAMES = {
     {
         Name    = "Anime Zero",
         Subtitle   = "Freemium Roblox Scripts",
-        PlaceId   = { 114574503491412, 109151342576374 },
+        PlaceIds  = { 114574503491412, 109151342576374 },
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/animezero.lua",
     },
 }
