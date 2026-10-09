@@ -69,6 +69,12 @@ local GAMES = {
         PlaceId   = 135675416428111,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/dontstealmyegg.lua",
     },
+    {
+        Name    = "Anime Zero",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 114574503491412,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/animezero.lua",
+    },
 }
 
 local CONFIG = {
