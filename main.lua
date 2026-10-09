@@ -46,12 +46,6 @@ local GAMES = {
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/fishingmaster.lua",
     },
     {
-        Name    = "+1 Loot To Forge",
-        Subtitle   = "Freemium Roblox Scripts",
-        PlaceId   = 118805555015549,
-        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/loottoforge-v3.lua",
-    },
-    {
         Name    = "+1 Assasin Leveling",
         Subtitle   = "Freemium Roblox Scripts",
         PlaceId   = 120731410233153,
