@@ -6,7 +6,7 @@ local GAMES = {
     {
         Name      = "The Morgue Shift",
         Subtitle  = "Freemium Roblox Scripts",
-        PlaceIds   = { 126025038789852,122093998639862, 98049867659682 },
+        PlaceIds   = { 126025038789852,122093998639862, 98049867659682, 82572839415010 },
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/themorgueshift.lua",
     },
     {
