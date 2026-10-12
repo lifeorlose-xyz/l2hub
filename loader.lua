@@ -13,6 +13,7 @@ local CONFIG = {
     LogoAsset      = "rbxassetid://105349270202991",
     SaveFile       = "L2Hub_LoaderAssets/key.txt",
     SaveFolder     = "L2Hub_LoaderAssets",
+    AutoExecFile   = "L2Hub_LoaderAssets/autoexec.txt",
     WindowTitle    = "L2 HUB",
     WindowSubtitle = "Freemium Roblox Scripts",
     BaseSize       = Vector2.new(400, 315),
@@ -146,6 +147,27 @@ local function ClearKey()
     if isfile(CONFIG.SaveFile) then
         pcall(delfile, CONFIG.SaveFile)
     end
+end
+
+local function SaveAutoExec(state)
+    if not writefile then return false end
+    if isfolder and makefolder and CONFIG.SaveFolder then
+        if not isfolder(CONFIG.SaveFolder) then
+            pcall(makefolder, CONFIG.SaveFolder)
+        end
+    end
+    return pcall(writefile, CONFIG.AutoExecFile, state and "1" or "0")
+end
+
+local function LoadAutoExec()
+    if not (isfile and readfile) then return false end
+    local ok = pcall(isfile, CONFIG.AutoExecFile)
+    if not ok or not isfile(CONFIG.AutoExecFile) then return false end
+    local ok2, content = pcall(readfile, CONFIG.AutoExecFile)
+    if ok2 and type(content) == "string" then
+        return (content:gsub("%s+", "") == "1")
+    end
+    return false
 end
 
 local function FireVerified(result)
@@ -342,7 +364,7 @@ Stroke(StatusDot, CONFIG.BG, 3, 0)
 
 local TitleLabel = Instance.new("TextLabel")
 TitleLabel.Position = UDim2.fromOffset(90, 10)
-TitleLabel.Size = UDim2.new(1, -90, 0, 26)
+TitleLabel.Size = UDim2.new(1, -160, 0, 26)
 TitleLabel.BackgroundTransparency = 1
 TitleLabel.Font = Enum.Font.GothamBold
 TitleLabel.Text = CONFIG.WindowTitle
@@ -354,7 +376,7 @@ TitleLabel.Parent = ProfileRow
 
 local SubLabel = Instance.new("TextLabel")
 SubLabel.Position = UDim2.fromOffset(90, 38)
-SubLabel.Size = UDim2.new(1, -90, 0, 18)
+SubLabel.Size = UDim2.new(1, -160, 0, 18)
 SubLabel.BackgroundTransparency = 1
 SubLabel.Font = Enum.Font.GothamMedium
 SubLabel.Text = CONFIG.WindowSubtitle
@@ -363,6 +385,74 @@ SubLabel.TextSize = 13
 SubLabel.TextXAlignment = Enum.TextXAlignment.Left
 SubLabel.ZIndex = 3
 SubLabel.Parent = ProfileRow
+
+local AutoToggleHolder = Instance.new("Frame")
+AutoToggleHolder.Name = "AutoToggleHolder"
+AutoToggleHolder.AnchorPoint = Vector2.new(1, 0)
+AutoToggleHolder.Position = UDim2.new(1, 0, 0, 20)
+AutoToggleHolder.Size = UDim2.fromOffset(60, 28)
+AutoToggleHolder.BackgroundColor3 = CONFIG.Surface
+AutoToggleHolder.BorderSizePixel = 0
+AutoToggleHolder.ZIndex = 5
+AutoToggleHolder.Parent = ProfileRow
+Corner(AutoToggleHolder, UDim.new(1, 0))
+local AutoToggleStroke = Stroke(AutoToggleHolder, CONFIG.Outline, 1, 0.4)
+
+local AutoToggleBtn = Instance.new("TextButton")
+AutoToggleBtn.Size = UDim2.fromScale(1, 1)
+AutoToggleBtn.BackgroundTransparency = 1
+AutoToggleBtn.Text = ""
+AutoToggleBtn.AutoButtonColor = false
+AutoToggleBtn.ZIndex = 6
+AutoToggleBtn.Parent = AutoToggleHolder
+
+local AutoKnob = Instance.new("Frame")
+AutoKnob.AnchorPoint = Vector2.new(0, 0.5)
+AutoKnob.Position = UDim2.new(0, 3, 0.5, 0)
+AutoKnob.Size = UDim2.fromOffset(22, 22)
+AutoKnob.BackgroundColor3 = CONFIG.Placeholder
+AutoKnob.BorderSizePixel = 0
+AutoKnob.ZIndex = 7
+AutoKnob.Parent = AutoToggleHolder
+Corner(AutoKnob, UDim.new(1, 0))
+
+local AutoLabel = Instance.new("TextLabel")
+AutoLabel.AnchorPoint = Vector2.new(0.5, 0)
+AutoLabel.Position = UDim2.new(0.5, 0, 1, 2)
+AutoLabel.Size = UDim2.new(1, 0, 0, 12)
+AutoLabel.BackgroundTransparency = 1
+AutoLabel.Font = Enum.Font.GothamBold
+AutoLabel.Text = "AUTO EXEC"
+AutoLabel.TextColor3 = CONFIG.Placeholder
+AutoLabel.TextSize = 9
+AutoLabel.ZIndex = 7
+AutoLabel.Parent = AutoToggleHolder
+
+local autoExecEnabled = LoadAutoExec()
+
+local function UpdateAutoToggle(animate)
+    local dur = animate and 0.2 or 0
+    if autoExecEnabled then
+        Tween(AutoToggleHolder, { BackgroundColor3 = CONFIG.AccentDark }, dur)
+        Tween(AutoKnob, { Position = UDim2.new(1, -25, 0.5, 0), BackgroundColor3 = CONFIG.Accent }, dur)
+        Tween(AutoToggleStroke, { Color = CONFIG.Accent, Transparency = 0.1 }, dur)
+        AutoLabel.TextColor3 = CONFIG.Accent
+    else
+        Tween(AutoToggleHolder, { BackgroundColor3 = CONFIG.Surface }, dur)
+        Tween(AutoKnob, { Position = UDim2.new(0, 3, 0.5, 0), BackgroundColor3 = CONFIG.Placeholder }, dur)
+        Tween(AutoToggleStroke, { Color = CONFIG.Outline, Transparency = 0.4 }, dur)
+        AutoLabel.TextColor3 = CONFIG.Placeholder
+    end
+end
+
+UpdateAutoToggle(false)
+
+AutoToggleBtn.MouseButton1Click:Connect(function()
+    autoExecEnabled = not autoExecEnabled
+    SaveAutoExec(autoExecEnabled)
+    UpdateAutoToggle(true)
+    Toast(autoExecEnabled and "Auto-Execute ON." or "Auto-Execute OFF.", true)
+end)
 
 local ContentArea = Instance.new("Frame")
 ContentArea.Position = UDim2.fromOffset(14, 110 + 48)
@@ -824,13 +914,28 @@ local function PerformVerify(rawKey, isAuto)
 
     task.spawn(function()
         task.wait(isAuto and 0.3 or 0.9)
-        if typed == NormalizeKey(CONFIG.Key) then
-            SaveKey(typed)
-            Toast(isAuto and "Key restored. Access granted." or "Access granted.", true)
-            VerifyLabel.Text = "Verified"
-            task.wait(0.5)
-            ShowGamePage()
+    if typed == NormalizeKey(CONFIG.Key) then
+        SaveKey(typed)
+        Toast(isAuto and "Key restored. Access granted." or "Access granted.", true)
+        VerifyLabel.Text = "Verified"
+        task.wait(0.5)
+
+        if autoExecEnabled then
+            local _, current = GetOrderedGames()
+            if current then
+                Toast("Auto-Executing: " .. tostring(current.Name), true)
+                task.wait(0.35)
+                FireVerified(current)
+                Tween(Root, { BackgroundTransparency = 1 }, 0.25)
+                task.wait(0.3)
+                ScreenGui:Destroy()
+            else
+                ShowGamePage()
+            end
         else
+            ShowGamePage()
+        end
+    else
             Toast("Invalid key. Please try again.", false)
             VerifyLabel.Text = "Verify Key"
             verifying = false
