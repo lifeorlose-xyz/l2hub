@@ -81,6 +81,12 @@ local GAMES = {
         PlaceId   = 139780970631001,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/prehistoricfarm.lua",
     },
+    {
+        Name    = "Ride A Fish",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 104050046639813,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/rideafish.lua",
+    },
 }
 
 local CONFIG = {
