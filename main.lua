@@ -3,12 +3,12 @@ local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
 
 local GAMES = {
-    {
-        Name      = "The Morgue Shift",
-        Subtitle  = "Freemium Roblox Scripts",
-        PlaceIds   = { 126025038789852,122093998639862, 98049867659682, 82572839415010 },
-        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/themorgueshift.lua",
-    },
+--    {
+--        Name      = "The Morgue Shift",
+--        Subtitle  = "Freemium Roblox Scripts",
+--        PlaceIds   = { 126025038789852,122093998639862, 98049867659682, 82572839415010 },
+--        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/themorgueshift.lua",
+--    },
     {
         Name      = "+1 Superhero Evolution",
         Subtitle  = "Freemium Roblox Scripts",
