@@ -87,6 +87,12 @@ local GAMES = {
         PlaceId   = 104050046639813,
         ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/rideafish.lua",
     },
+    {
+        Name    = "Climb For Animals Egg",
+        Subtitle   = "Freemium Roblox Scripts",
+        PlaceId   = 85738654635245,
+        ScriptURL = "https://cdn.jsdelivr.net/gh/lifeorlose-xyz/l2hub@refs/heads/main/scripts/climbforanimals.lua",
+    },
 }
 
 local CONFIG = {
